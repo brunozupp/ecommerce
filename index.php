@@ -2,12 +2,21 @@
 
 	require_once("vendor/autoload.php");
 
-	$app = new \Slim\Slim();
+	use \Slim\Slim;
+	use \Hcode\Page;
+
+	$app = new Slim();
 
 	$app->config('debug', true);
 
 	$app->get('/', function() {
-		echo "OK";
+		
+		$page = new Page(); // Chama o método construct que cria o meu header
+
+		$page->setTpl("index"); // Chama o método setTpl para criar o body
+
+		// Depois de executado tudo, vai entrar no destruct que é onde vai criar meu footer
+
 	});
 
 	$app->run();
