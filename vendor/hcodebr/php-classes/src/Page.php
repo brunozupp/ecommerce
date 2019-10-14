@@ -14,14 +14,14 @@
 			"data" => []
 		];
 
-		public function __construct($opts = array()) { // primeiro método a ser executado
+		public function __construct($opts = array(), $tpl_dir = "/views/") { // primeiro método a ser executado
 
 			// array_merge mescla. O último sempre vai sobreescrever os anteriores
 			$this->options = array_merge($this->defaults, $opts);
 
 			$config = array(
-				"tpl_dir" => $_SERVER["DOCUMENT_ROOT"]."/views/",
-				"cache_dir" => $_SERVER["DOCUMENT_ROOT"]."/views-cache",
+				"tpl_dir" => $_SERVER["DOCUMENT_ROOT"].$tpl_dir,
+				"cache_dir" => $_SERVER["DOCUMENT_ROOT"]."/views-cache/",
 				"debug" => false
 			);
 
