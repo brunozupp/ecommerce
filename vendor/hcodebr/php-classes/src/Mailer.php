@@ -3,6 +3,8 @@
 	namespace Hcode;
 
 	use Rain\Tpl;
+	use PHPMailer\PHPMailer\PHPMailer;
+	use PHPMailer\PHPMailer\SMTP;
 
 	class Mailer {
 
@@ -40,7 +42,7 @@
 			// SMTP::DEBUG_OFF = off (for production use)
 			// SMTP::DEBUG_CLIENT = client messages
 			// SMTP::DEBUG_SERVER = client and server messages
-			$this->mail->SMTPDebug = SMTP::DEBUG_OFF;
+			$this->mail->SMTPDebug = \SMTP::DEBUG_OFF;
 
 			//Set the hostname of the mail server
 			$this->mail->Host = 'smtp.gmail.com';
@@ -52,7 +54,7 @@
 			$this->mail->Port = 587;
 
 			//Set the encryption mechanism to use - STARTTLS or SMTPS
-			$this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+			$this->mail->SMTPSecure = 'tls';
 
 			//Whether to use SMTP authentication
 			$this->mail->SMTPAuth = true;
@@ -77,7 +79,7 @@
 
 			//Read an HTML message body from an external file, convert referenced images to embedded,
 			//convert HTML into a basic plain-text alternative body
-			$this->mail->msgHTML($hthml);
+			$this->mail->msgHTML($html);
 
 			//Replace the plain text body with one created manually
 			$this->mail->AltBody = 'This is a plain-text message body';

@@ -1,6 +1,12 @@
 CREATE DATABASE  IF NOT EXISTS `db_ecommerce` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `db_ecommerce`;
 
+SELECT * FROM tb_userspasswordsrecoveries a
+INNER JOIN tb_users b USING(iduser)
+INNER JOIN tb_persons c USING(idperson)
+WHERE a.idrecovery = 2 AND a.dtrecovery IS NULL
+AND DATE_ADD(a.dtregister, INTERVAL 1 HOUR) >= NOW();
+
 DROP TABLE IF EXISTS `db_ecommerce`.`tb_persons`;
 
 CREATE TABLE `db_ecommerce`.`tb_persons` (
