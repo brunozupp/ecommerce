@@ -272,6 +272,7 @@
 		exit;
 	});
 
+	// Acessar a página
 	$app->get("/admin/categories/:idcategory", function($idcategory) {
 
 		User::verifyLogin();
@@ -287,6 +288,7 @@
 		]);
 	});
 
+	// Enviar as alterações da página
 	$app->post("/admin/categories/:idcategory", function($idcategory) {
 
 		User::verifyLogin();
@@ -301,6 +303,20 @@
 
 		header('Location: /admin/categories');
 		exit;
+	});
+
+	$app->get("/categories/:idcategory", function($idcategory) {
+
+		$category = new Category();
+
+		$category->get((int) $idcategory);
+
+		$page = new Page();
+
+		$page->setTpl("category", [
+			'category' => $category->getValues(),
+			'products' => []
+		]);
 	});
 
 	$app->run();
