@@ -41,6 +41,7 @@
 		exit;
 	});
 
+	// Update
 	$app->get("/admin/products/:idproduct", function($idproduct) {
 
 		User::verifyLogin();
@@ -56,6 +57,7 @@
 		]);
 	});
 
+	// Update
 	$app->post("/admin/products/:idproduct", function($idproduct) {
 
 		User::verifyLogin();

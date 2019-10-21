@@ -15,6 +15,18 @@
 			return $sql->select("SELECT * FROM tb_products ORDER BY desproduct");
 		}
 
+		public static function checkList($list) {
+
+			foreach($list as &$row) {
+
+				$p = new Product();
+				$p->setData($row);
+				$row = $p->getValues();
+			}
+
+			return $list;
+		}
+
 		public function save() {
 
 			$sql = new Sql();
@@ -83,10 +95,15 @@
 		// Salvando a imagem no formato jpg
 		public function setPhoto($file) {
 
+			// Verifico se foi posto alguma foto antes de salvar
+			if(strlen($file['type']) == 0) {
+				return NULL;
+			}
+
 			$extension = explode('.', $file['name']);
 			$extension = end($extension);
 
-			switch($extension) {
+			switch(strtolower($extension)) {
 
 				case "jpg":
 				case "jpeg":
@@ -115,6 +132,7 @@
 			imagedestroy($image);
 
 			$this->checkPhoto();
+
 		}
 	}
 
