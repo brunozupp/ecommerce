@@ -1,6 +1,7 @@
 <?php 
 
 	use \Hcode\Page;
+	use \Hcode\Model\Category;
 	use \Hcode\Model\Product;
 
 	$app->get('/', function() {
@@ -15,6 +16,21 @@
 
 		// Depois de executado tudo, vai entrar no destruct que é onde vai criar meu footer
 
+	});
+
+		// Tela que mostra uma categoria específica
+	$app->get("/categories/:idcategory", function($idcategory) {
+
+		$category = new Category();
+
+		$category->get((int) $idcategory);
+
+		$page = new Page();
+
+		$page->setTpl("category", [
+			'category' => $category->getValues(),
+			'products' => Product::checkList($category->getProducts())
+		]);
 	});
 
 ?>
