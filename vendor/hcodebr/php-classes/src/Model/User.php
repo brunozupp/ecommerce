@@ -13,6 +13,42 @@
 
 		const SESSION = "User";
 
+		public static function getFromSession() {
+
+			$user = new User();
+
+			if(isset($_SESSION[User::SESSION]) && (int)$_SESSION[User::SESSION]['iduser'] > 0) {
+
+				$user->setData($_SESSION[User::SESSION]);
+			}
+
+			return $user;
+		}
+
+		public static function checkLogin($inadmin = true) {
+
+			if(!isset($_SESSION[User::SESSION]) || // Se não existe a sessão, não logou
+				!$_SESSION[User::SESSION] || // se está vazio, deslogado
+				!(int)$_SESSION[User::SESSION]["iduser"] > 0) 
+			{
+				// Não está logado
+				return false;
+			} else {
+
+				// Ele está logado e é administrador
+				if($inadmin === true && (bool)$_SESSION[User::SESSION]['inadmin'] === true) {
+					return true;
+
+				} else if($inadmin === false) { // Não é administrador mas está logado
+					return true;
+
+				} else { // Não está logado
+					return false;
+				}
+			}
+
+		}
+
 		public static function login($login, $password) {
 
 			$sql = new Sql();
@@ -48,11 +84,7 @@
 
 		public static function verifyLogin($inadmin = true) {
 
-			if(!isset($_SESSION[User::SESSION]) || // Se não existe a sessão, não logou
-				!$_SESSION[User::SESSION] || // se está vazio, deslogado
-				!(int)$_SESSION[User::SESSION]["iduser"] > 0 ||
-				(bool)$_SESSION[User::SESSION]["inadmin"] !== $inadmin
-			) {
+			if(User::checkLogin($inadmin)) {
 				header("Location: /admin/login");
 				exit;
 			}
